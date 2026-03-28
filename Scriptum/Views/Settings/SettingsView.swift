@@ -97,7 +97,7 @@ struct SettingsView: View {
             }
         }
         .presentationDetents([.large])
-        .presentationDragIndicator(.visible)
+        .presentationDragIndicator(.hidden)
         .presentationBackground(.clear)
         .confirmationDialog(
             "Delete all \(store.notes.count) notes?",

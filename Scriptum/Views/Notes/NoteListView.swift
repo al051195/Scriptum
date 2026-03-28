@@ -24,6 +24,7 @@ struct NoteListView: View {
                         text: $store.searchQuery,
                         isFocused: $searchFocused
                     )
+                    .padding(.top, 56)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 12)
                     .revealIn(delay: 0.1)
@@ -108,6 +109,7 @@ struct NoteListView: View {
                 .padding(.top, 8)
             }
             .scrollDismissesKeyboard(.interactively)
+            .onTapGesture { UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil) }
 
             // Floating Action Button
             FloatingActionBar(showSettings: $showSettings) {
@@ -115,6 +117,7 @@ struct NoteListView: View {
             }
             .padding(.bottom, 16)
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .navigationBarHidden(true)
         .background(Color.clear)
         .confirmationDialog("Sort Notes", isPresented: $showSortMenu) {
@@ -337,6 +340,10 @@ struct SearchBarView: View {
                 .foregroundStyle(ThemeManager.t3)
 
             TextField("Search notes...", text: $text)
+                .submitLabel(.search)
+                .onSubmit {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
                 .font(.system(size: 15, weight: .regular))
                 .foregroundStyle(ThemeManager.t1)
                 .tint(ThemeManager.teal)

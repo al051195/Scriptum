@@ -130,7 +130,7 @@ struct NewNoteSheet: View {
             }
         }
         .presentationDetents([.large])
-        .presentationDragIndicator(.visible)
+        .presentationDragIndicator(.hidden)
         .presentationBackground(.clear)
     }
 
@@ -157,9 +157,17 @@ struct SheetHeader: View {
 
     var body: some View {
         HStack {
-            Button("Cancel", action: onCancel)
-                .font(.system(size: 16, weight: .medium))
-                .foregroundStyle(ThemeManager.t2)
+            if #available(iOS 26.0, *) {
+                Button("Cancel", action: onCancel)
+                    .font(.system(size: 16, weight: .medium))
+                    .buttonStyle(GlassProminentButtonStyle())
+                    .tint(.red)
+            } else {
+                // Fallback on earlier versions
+                Button("Cancel", action: onCancel)
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundStyle(ThemeManager.t2)
+            }
 
             Spacer()
 
@@ -176,9 +184,17 @@ struct SheetHeader: View {
 
             Spacer()
 
-            Button("Save", action: onSave)
-                .font(.system(size: 16, weight: .bold))
-                .foregroundStyle(ThemeManager.gold)
+            if #available(iOS 26.0, *) {
+                Button("Save", action: onSave)
+                    .font(.system(size: 16, weight: .bold))
+                    .buttonStyle(GlassProminentButtonStyle())
+                    .tint(.blue)
+            } else {
+                // Fallback on earlier versions
+                Button("Save", action: onSave)
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundStyle(ThemeManager.gold)
+            }
         }
     }
 }
